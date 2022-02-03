@@ -12,14 +12,14 @@ def createTxt(mensagemCifrada):
     file = False
     
     try:
-        arquivo = open("KeyPublic/fileCripitado.txt","a")
-        arquivo.write("\n"+mensagemCifrada+"\n")
+        arquivo = open("publicKey/fileCripitado.txt","a")
+        arquivo.write(str(mensagemCifrada)+"\n")
         arquivo.close()
         file = True
     
     except FileNotFoundError:
-        arquivo = open("keyFolder/fileCripitado.txt","w+")
-        arquivo.write(mensagemCifrada+"\n")
+        arquivo = open("publicKey/fileCripitado.txt","w+")
+        arquivo.write(str(mensagemCifrada)+"\n")
         arquivo.close()
         file = True
     
