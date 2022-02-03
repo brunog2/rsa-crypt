@@ -37,10 +37,11 @@ int main()
     scanf("%d", &e);
     d = p*q;
     k = modInverse(e, ((p-1)*(q-1)));
-    for(int i = 1; i < 7; i++)
+    for(int i = 1; i < 50; i++)
     {
         res = descriptografar(d, k);
         printf("%c", alfabeto[res-1]);
     }
+    printf("\n");
     return 0;
 }
