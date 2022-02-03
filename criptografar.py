@@ -8,7 +8,22 @@
 # solicitar texto a ser encriptado
 # solicitar a chave publica que o usuario recebeu
 # salvar em um arquivo a mensagem criptografada
-
+def createTxt(mensagemCifrada):
+    file = False
+    
+    try:
+        arquivo = open("KeyPublic/fileCripitado.txt","a")
+        arquivo.write("\n"+mensagemCifrada+"\n")
+        arquivo.close()
+        file = True
+    
+    except FileNotFoundError:
+        arquivo = open("keyFolder/fileCripitado.txt","w+")
+        arquivo.write(mensagemCifrada+"\n")
+        arquivo.close()
+        file = True
+    
+    return file
 # --desencriptar--
 # solicitar p,q, e ao usuario
 # salvar a mensagem desencriptada em um arquivo
@@ -30,12 +45,9 @@ for x in range(len(mensagem)):
 #n = (17 - 1) * (41 - 1)
 #e = mdc(n, x) | e == 1 | 1 < x < n
 
-p, q = 17, 41
-
-#Chave pública = (n, e)
-#Chave pública = (697, 13)
-n = p*q
-e = 13
+#informando as chaves que foi gerada no primeiro passo
+n = int(input("informe sua primeira chave de Criptografia:"))
+e = int(input("informe sua segunda chave de Criptografia:"))
 
 #print(mensagemCifrada)
 
@@ -44,4 +56,9 @@ for i in range(len(mensagemCifrada)):
     c = (caractere**e)%n
     mensagemCifrada[i] = c
 
-print(mensagemCifrada)
+#print(mensagemCifrada)
+
+file = createTxt(mensagemCifrada)
+
+print("Mensagem salva\n" if file == True else "mensagem não foi salva\n")
+    
