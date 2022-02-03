@@ -74,7 +74,7 @@ else:
 
 #informar as chaves para a descriptografia
 #print("\nAnote a chave para criptografar a mensagem")
-print("\nA chave pública é: ({}, {})".format(n, e))
+print("\nA chave pública é:\n(n: {}, e: {})".format(n, e))
 print("Anote os primos digitados! Eles servirão para descriptografar a mensagem.")
 #informa a chave para a descriptografia ao usuário
 
@@ -102,6 +102,5 @@ if not isExist:
   os.makedirs(path)
 
 arquivo = open(path+"/KeyPublic.txt", "w+")
-arquivo.write(str(n)+"\n")
-arquivo.write(str(e)+"\n")
+arquivo.write("n: {}, e: {}\n".format(n, e))
 arquivo.close()

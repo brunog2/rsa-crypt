@@ -1,4 +1,4 @@
-# import os
+import os
 
 # --chave publica--
 # solicitar 2 numeros primos p e q e um expoente relativamente primo a (p - 1)(q - 1).
@@ -8,22 +8,7 @@
 # solicitar texto a ser encriptado
 # solicitar a chave publica que o usuario recebeu
 # salvar em um arquivo a mensagem criptografada
-def createTxt(mensagemCifrada):
-    file = False
-    
-    try:
-        arquivo = open("KeyPublic/fileCripitado.txt","a")
-        arquivo.write("\n"+mensagemCifrada+"\n")
-        arquivo.close()
-        file = True
-    
-    except FileNotFoundError:
-        arquivo = open("keyFolder/fileCripitado.txt","w+")
-        arquivo.write(mensagemCifrada+"\n")
-        arquivo.close()
-        file = True
-    
-    return file
+
 # --desencriptar--
 # solicitar p,q, e ao usuario
 # salvar a mensagem desencriptada em um arquivo
@@ -46,8 +31,9 @@ for x in range(len(mensagem)):
 #e = mdc(n, x) | e == 1 | 1 < x < n
 
 #informando as chaves que foi gerada no primeiro passo
-n = int(input("informe sua primeira chave de Criptografia:"))
-e = int(input("informe sua segunda chave de Criptografia:"))
+print("Informe a chave pública da criptografia")
+n = int(input("n: "))
+e = int(input("e: "))
 
 #print(mensagemCifrada)
 
@@ -56,9 +42,19 @@ for i in range(len(mensagemCifrada)):
     c = (caractere**e)%n
     mensagemCifrada[i] = c
 
-#print(mensagemCifrada)
+print(mensagemCifrada)
 
-file = createTxt(mensagemCifrada)
+path = './publicKey'
+isExist = os.path.exists(path)
 
-print("Mensagem salva\n" if file == True else "mensagem não foi salva\n")
+if not isExist:    
+  os.makedirs(path)
+
+try:
+    arquivo = open(path+"/KeyPublic.txt", "w+")
+    arquivo.write("n: {}, e: {}\n".format(n, e))
+    arquivo.close()
+
+except:
+    print("Mensagem não foi salva\n")
     
