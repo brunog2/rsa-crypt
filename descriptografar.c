@@ -8,11 +8,11 @@ int modInverse(int a, int m) //Função para encontrar o segundo numero da Chave
           return x;
 }
 
-int descriptografar(int d, int k) //Função que recebe a Chave Privada e o Codigo criptografado e descriptografa.
+int descriptografar(int d, int k, int i, int codigo[]) //Função que recebe a Chave Privada e o Codigo criptografado e descriptografa.
 {
     int n;
     int resultado, pot;
-    scanf("%d", &n);
+    n = codigo[i];
     pot = n % d;
     resultado = 1;
     for( ; k > 0; k /= 2)
@@ -32,16 +32,41 @@ int main()
     int k, d;
     int p, q, e;
     int res;
+    int aux;
+    int n = 0;
     char alfabeto[28] = " abcdefghijklmnopqrstuvwxyz "; //Alfabeto que o professor pediu. A = 2, B = 3... Z = 27, espaço = 28.
     scanf("%d %d", &p, &q);
     scanf("%d", &e);
-    d = p*q; // d = primeiro numero da chave privada.
-    k = modInverse(e, ((p-1)*(q-1))); // k = segundo numero da chave privada.
-    for(int i = 1; i < 50; i++)//for final pra receber e descriptografar todos os numeros.
+    
+    int codigo[2000];
+
+    for(aux = 0; aux < 2000; aux++) // for para definir todos os elementos do array codigo como -555.
     {
-        res = descriptografar(d, k);
-        printf("%c", alfabeto[res-1]); //recebe o numero inteiro da função, e busca no alfabeto da linha 35 o numero correspondente.
+        codigo[aux] = -555;
     }
+
+    for(aux = 0; aux < 2000; aux++)  // for para substituir os elementos do array codigo pelo codigo criptografado.
+    {
+        if(scanf("%d", &codigo[aux])==EOF){aux+=2000;}
+    }
+
+    for(aux = 0; aux != 2000; aux++) // for para contar quantos elementos o array tem até encontrar o primeiro -555.
+    {
+        if(codigo[aux]!=-555)
+        {
+            n++;
+        }
+    }
+  
+    d = p*q;                          // d = primeiro numero da chave privada.
+    k = modInverse(e, ((p-1)*(q-1))); // k = segundo numero da chave privada.
+
+    for(int i = 1; i <= n; i++)       // ultimo for, rodar a função descriptografar n vezes.
+    {
+        res = descriptografar(d, k, i-1, codigo);
+        printf("%c", alfabeto[res-1]); 
+    }
+
     printf("\n");
     return 0;
 }
