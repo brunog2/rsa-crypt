@@ -33,7 +33,7 @@ def MDC(p,q,e):
 
 #inserção de dados para gerar as chaves publicas
 
-print("Informe dois numeros inteiros e distintos com diferença de 100 digitos para gerar a chave de criptografia:\n")
+print("Informe dois numeros inteiros e distintos com diferença de 100 numeros para gerar a chave de criptografia:\n")
 
 p = int(input('insira o 1° valor:'))
 q = int(input('insira o 2° valor:'))
@@ -57,10 +57,17 @@ coPrimes_list = MDC(p,q,e)
 
 e = random.choice(coPrimes_list)
 
-#informa a chave ao usuário
-print("sua primeira chave é: "+keyOne)
-print("sua segunda chave é: "+keyTwo)
-print("sua chave terceira chave é: "+e)
+#informar as chaves para a descriptografia
+print("anote suas chaves para criptografar a mensagem\n")
+print("primeira chave é: "+(keyOne*keyTwo)+"\n")
+print("segunda chave é: "+e+"\n")
+
+#informa a chave para a descriptografia ao usuário
+
+print("anote suas chaves para descriptografar a mensagem\n")
+print("sua primeira chave é: "+keyOne+"\n")
+print("sua segunda chave é: "+keyTwo+"\n")
+print("sua terceira chave é: "+e+"\n")
 
 #adiciona as chaves publica no arquivo txt
 try:
