@@ -33,7 +33,7 @@ def MDC(p,q,e):
 
 #inserção de dados para gerar as chaves publicas
 
-print("Informe dois numeros inteiros e distintos com diferença de 100 numeros para gerar a chave de criptografia:\n")
+print("Informe dois numeros inteiros e distintos com diferença minima de 100 numeros para gerar a chave de criptografia:\n")
 
 p = int(input('insira o 1° valor:'))
 q = int(input('insira o 2° valor:'))
