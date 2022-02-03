@@ -51,8 +51,8 @@ if not isExist:
   os.makedirs(path)
 
 try:
-    arquivo = open(path+"/KeyPublic.txt", "w+")
-    arquivo.write("n: {}, e: {}\n".format(n, e))
+    arquivo = open(path+"/encriptedText.txt", "w+")
+    arquivo.write(str(mensagemCifrada))
     arquivo.close()
 
 except:
