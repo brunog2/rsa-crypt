@@ -1,8 +1,10 @@
 #essa class será utilizada para gerar as chaves publicas
 #para criptografia 
 
+from contextlib import nullcontext
 from operator import truediv
 import random
+import os
 
 def primesInRange(p,q):
     primes_List = []
@@ -24,63 +26,82 @@ def MDC(p,q,e):
         isCoPrime = True
         if n%p == 0 or n%q == 0:
             isCoPrime = False
-    
-    if isCoPrime:
-        primes_list.append(n)
-    
+        if isCoPrime:
+            primes_list.append(n)
+        
     return primes_list
 
 
 #inserção de dados para gerar as chaves publicas
 
-print("Informe dois numeros inteiros e distintos com diferença minima de 100 numeros para gerar a chave de criptografia:\n")
+print("Informe dois numeros primos:\n")
 
-p = int(input('insira o 1° valor:'))
-q = int(input('insira o 2° valor:'))
+p = int(input('Insira o 1° valor: '))
+q = int(input('Insira o 2° valor: '))
 
 #recupera a lista de numeros primos
-primes_list = primesInRange(p,q)
+#primes_list = primesInRange(p,q)
 
 #seleciona os numeros primos de forma aleatória 
-keyOne = random.choice(primes_list)
-keyTwo = random.choice(primes_list)
+#keyOne = random.choice(primes_list)
+#keyTwo = random.choice(primes_list)
 
 #verifica e garante que as chaves não são iguais
 
-while keyOne == keyTwo:
-    keyTwo = random.choice(primes_list)
+#while keyOne == keyTwo:
+#    keyTwo = random.choice(primes_list)
 
 #calculo do exponencial para a criptografia
-e = (p-1)*(q-1)
+n = p*q
 
-coPrimes_list = MDC(p,q,e)
+#selecionando um expoente relativamente primo a (p-1)*(q-1) 
+#aleatoriamente
+print("\nDeseja gerar um expoente aleatoriamente ou digitar manualmente?\n")
+generateE = input("1 - Gerar expoente | 2 - Digitar manualmente: ")
+e = None
+if generateE != str(1):
+    e = int(input("\nDigite um número qualquer relativamente primo a {}: ".format((p-1)*(q-1))))
+    while e%p == 0 or e%q == 0:
+        print("O número informado não é relativamente primo a {}!".format((p-1)*(q-1)))
+        e = int(input("\nDigite um número qualquer relativamente primo a {}: ".format((p-1)*(q-1))))
+else:        
+    coPrimes_list = MDC(p,q,(p-1)*(q-1))
+    print(coPrimes_list)
+    e = random.choice(coPrimes_list)
 
-e = random.choice(coPrimes_list)
+    #caso não seja permitido gerar um coprimo aleatoriamente
+    #pedindo ao usuário
 
 #informar as chaves para a descriptografia
-print("anote suas chaves para criptografar a mensagem\n")
-print("primeira chave é: "+(keyOne*keyTwo)+"\n")
-print("segunda chave é: "+e+"\n")
-
+#print("\nAnote a chave para criptografar a mensagem")
+print("\nA chave pública é: ({}, {})".format(n, e))
+print("Anote os primos digitados! Eles servirão para descriptografar a mensagem.")
 #informa a chave para a descriptografia ao usuário
 
-print("anote suas chaves para descriptografar a mensagem\n")
-print("sua primeira chave é: "+keyOne+"\n")
-print("sua segunda chave é: "+keyTwo+"\n")
-print("sua terceira chave é: "+e+"\n")
+#print("\nanote suas chaves para descriptografar a mensagem")
+#print("sua primeira chave é: ",keyOne)
+#print("sua segunda chave é: ",keyTwo)
+#print("sua terceira chave é: ",e)
 
 #adiciona as chaves publica no arquivo txt
-try:
-    arquivo = open("keyFolder/KeyPublic.txt","a")
-    arquivo.write(keyOne+"\n")
-    arquivo.write(keyTwo+"\n")
-    arquivo.write(e+"\n")
-    arquivo.close()
 
-except FileNotFoundError:
-    arquivo = open("keyFolder/KeyPublic.txt","w+")
-    arquivo.write(keyOne+"\n")
-    arquivo.write(keyTwo+"\n")
-    arquivo.write(e+"\n")
-    arquivo.close()
 
+#try:
+#    writeKey("a")
+
+#except FileNotFoundError:
+#    writeKey("w+")
+
+#ao gerar uma nova chave pública, o que estiver dentro do arquivo
+#deve ser substituído
+
+path = './publicKey'
+isExist = os.path.exists(path)
+
+if not isExist:    
+  os.makedirs(path)
+
+arquivo = open(path+"/KeyPublic.txt", "w+")
+arquivo.write(str(n)+"\n")
+arquivo.write(str(e)+"\n")
+arquivo.close()
