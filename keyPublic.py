@@ -51,36 +51,36 @@ while keyOne == keyTwo:
     keyTwo = random.choice(primes_list)
 
 #calculo do exponencial para a criptografia
-e = (p-1)*(q-1)
+e = (keyOne-1)*(keyTwo-1)
 
-coPrimes_list = MDC(p,q,e)
+coPrimes_list = MDC(keyOne,keyTwo,e)
 
 e = random.choice(coPrimes_list)
 
 #informar as chaves para a descriptografia
 print("anote suas chaves para criptografar a mensagem\n")
-print("primeira chave é: "+(keyOne*keyTwo)+"\n")
-print("segunda chave é: "+e+"\n")
+print("primeira chave é: ",(keyOne*keyTwo),"\n")
+print("segunda chave é: ",e,"\n")
 
 #informa a chave para a descriptografia ao usuário
 
 print("anote suas chaves para descriptografar a mensagem\n")
-print("sua primeira chave é: "+keyOne+"\n")
-print("sua segunda chave é: "+keyTwo+"\n")
-print("sua terceira chave é: "+e+"\n")
+print("sua primeira chave é: ",keyOne,"\n")
+print("sua segunda chave é: ",keyTwo,"\n")
+print("sua terceira chave é: ",e,"\n")
 
 #adiciona as chaves publica no arquivo txt
 try:
     arquivo = open("keyFolder/KeyPublic.txt","a")
-    arquivo.write(keyOne+"\n")
-    arquivo.write(keyTwo+"\n")
-    arquivo.write(e+"\n")
+    arquivo.write(keyOne,"\n")
+    arquivo.write(keyTwo,"\n")
+    arquivo.write(e,"\n")
     arquivo.close()
 
 except FileNotFoundError:
     arquivo = open("keyFolder/KeyPublic.txt","w+")
-    arquivo.write(keyOne+"\n")
-    arquivo.write(keyTwo+"\n")
-    arquivo.write(e+"\n")
+    arquivo.write(keyOne,"\n")
+    arquivo.write(keyTwo,"\n")
+    arquivo.write(e,"\n")
     arquivo.close()
 
