@@ -1,9 +1,11 @@
+import unidecode
+
 alfabeto = list('abcdefghijklmnopqrstuvwxyz '.upper())
 index = [x+2 for x in range(len(alfabeto))]
 
 class Crypt:
     def __init__(self, text, n, e):
-        self.text = text
+        self.text = unidecode.unidecode(text)
         self.n = n
         self.e = e
         
