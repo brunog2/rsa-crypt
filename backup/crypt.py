@@ -15,14 +15,16 @@ import os
 
 # A mensagem deve ser encriptada usando o alfabeto de letras A - Z,
 # codificado com inteiros de 2 a 28, onde 2 = A, 3 = B,..., 27 = Z, 28 = espaço
-mensagem = input("Informe a mensagem: ")
-alfabeto = list('abcdefghijlmnopqrstuvxz'.upper())
-index = [x+1 for x in range(len(alfabeto))]
+alfabeto = list('abcdefghijklmnopqrstuvwxyz '.upper())
+index = [x+2 for x in range(len(alfabeto))]
 #print(index)
+mensagem = input("Informe a mensagem: ")
+
 mensagemCifrada = []
 
 for x in range(len(mensagem)):
-    mensagemCifrada.append(index[alfabeto.index(mensagem[x].upper())])
+    if mensagem[x].upper() in alfabeto:
+        mensagemCifrada.append(index[alfabeto.index(mensagem[x].upper())])
 
 #primos (p, q): 17 e 41
 
@@ -39,19 +41,22 @@ e = int(input("e: "))
 
 for i in range(len(mensagemCifrada)):
     caractere = mensagemCifrada[i]
-    c = (caractere**e)%n
-    mensagemCifrada[i] = c
+    if type(caractere) == int:
+        c = (caractere**e)%n
+        mensagemCifrada[i] = c    
+
+mensagemCifrada = (" ".join([str(lst) for lst in mensagemCifrada]))
 
 print(mensagemCifrada)
 
-path = './publicKey'
+path = './public'
 isExist = os.path.exists(path)
 
 if not isExist:    
   os.makedirs(path)
 
 try:
-    arquivo = open(path+"/encriptedText.txt", "w+")
+    arquivo = open(path+"/encrypted-text.txt", "w+")
     arquivo.write(str(mensagemCifrada))
     arquivo.close()
 
