@@ -7,33 +7,27 @@ class Decrypt:
         self.q = q
         self.e = e
         
-  
+    def euclidesEst(self, a, b, c):
+        r = abs(a%b)
+        print("r", r)
+        if r == 0:
+            print("r 0", abs((c/a)%(b/a)))
+            return int(abs((c/a)%(b/a)))
+        return int((self.euclidesEst(r, a, -c)) * ((b + c / abs(a%b))))
+
     def decrypt(self):
-        k = 0
-        d = self.p * self.q
-        m = (self.p-1)*(self.q-1)
-        a = self.e%m
-        for x in range(1, m):
-            if ((a*x) % m == 1):
-                k = x
+        primesProduct = (self.p-1)*(self.q-1)
+        n = self.p*self.q
+        d = self.euclidesEst(self.e, primesProduct, 1)
+        
+        print("d", d)
+       
         decryptedText = ""
 
-        for i in range(1, len(self.text)+1):
-            k1 = k
+        for i in range(1, len(self.text)+1):            
             n = int(self.text[i-1])
-            pot = n % d
-            
-            result = 1
-            
-            
-            while int(k1) > 0:
-                if int(k1) % 2 == 1:
-                    result = (result * pot) % d
-                    
-                pot = (pot * pot) % d
-                k1 /= 2
-
-            decryptedText += alfabeto[result-2]
+            m = (n ^ d ) % n
+            decryptedText += alfabeto[m-2]
         
         return {"decryptedText": decryptedText}
                 
