@@ -9,7 +9,7 @@ class Gen:
         self.e = e
 
     # realiza a potencia dos números para o teste de rabin
-    def power(self, x, y, p):         
+    def exp(self, x, y, p):         
         res = 1        
         x = x % p
         while (y > 0):
@@ -23,7 +23,7 @@ class Gen:
     # e um n a qual se deseja verificar primalidade
     def testeRabin(self, d, n):
         a = 2 + random.randint(1, n - 4)    
-        x = self.power(a, d, n)
+        x = self.exp(a, d, n)
     
         if (x == 1 or x == n - 1):
             return True
