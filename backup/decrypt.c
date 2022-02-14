@@ -10,20 +10,26 @@ long long int modInverse(long long int a, long long int m) //Função para encon
 
 long long int descriptografar(long long int d, long long int k, int i, long long int codigo[]) //Função que recebe a Chave Privada e o Codigo criptografado e descriptografa.
 {
+    
     long long int n;
     long long int resultado, pot;
     n = codigo[i];
     pot = n % d;
+
     resultado = 1;
-    for( ; k > 0; k /= 2)
+    for( ; k > 0; k /= 2) 
     {
+        printf("d (while): %d\n", d);
         if (k % 2 == 1)
         {
+            
             resultado = (resultado * pot) % d;
+            printf("resultado: %d\n", resultado);
         }
             pot = (pot * pot) % d;
         
     }
+    printf("c, m %d %d\n", n, resultado);
     return resultado;
 }
 
@@ -60,10 +66,11 @@ int main()
   
     d = p*q;                          // d = primeiro numero da chave privada.
     k = modInverse(e, ((p-1)*(q-1))); // k = segundo numero da chave privada.
-
+    printf("o k %d\n", k);
     for(int i = 1; i <= n; i++)       // ultimo for, rodar a função descriptografar n vezes.
     {
         res = descriptografar(d, k, i-1, codigo);
+        printf("res: %d", res);
         printf("%c", alfabeto[res-1]); 
     }
 

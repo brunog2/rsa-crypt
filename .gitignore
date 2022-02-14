@@ -1,3 +1,5 @@
 public/
 src/__pycache__
+src/test.exe
+src/in.txt
 src/modules/__pycache__

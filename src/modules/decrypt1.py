@@ -29,10 +29,16 @@ class Decrypt:
 
 
     def decrypt(self):
-        print("m: 21 22 19 10 15 8")
+        #print("m: 21 22 19 10 15 8")
         primesProduct = (self.p-1)*(self.q-1)
         n = self.p*self.q
-        d1 = abs(self.euclidesEst(self.e, primesProduct))       
+        #d1 = abs(self.euclidesEst(self.e, primesProduct))   # <- errado
+        # d1 = pow(self.e, -1, primesProduct) # <-  certo
+        
+        d1 = 87274316104749024
+        print("e ",(self.e))
+        print("n ",primesProduct)
+        print("inv ",(d1))
        
         decryptedText = ""
 
@@ -41,21 +47,21 @@ class Decrypt:
             #print("d, i", d, i)
             c = int(self.text[i-1])
             #m1 = c ** d % n
-            print(c, d, n)
+            #print(c, d, n)
             m = 1
             pot = c % n
             
-            print("pot: {} % {} = {}".format(c, n, pot))
+            #print("pot: {} % {} = {}".format(c, n, pot))
             while (int(d) > 0):
-                print("d (while):", int(d))
+             #   print("d (while):", int(d))
                 if (int(d) % 2 == 1):
-                    print("resultado ({} * {}) % {} = {}".format(int(m), int(pot), int(n), (int(m) * int(pot)) % int(n)))
+                    #print("resultado ({} * {}) % {} = {}".format(int(m), int(pot), int(n), (int(m) * int(pot)) % int(n)))
                     m = (int(m) * int(pot)) % int(n)
                 pot = (int(pot) * int(pot)) % int(n)
                 d /= 2
 
-            print("c, m (pre), m (obt)", c, m)   
-            #print("m", m)
+            #print("c, m (pre), m (obt)", c, m)   
+            print("m", m)
             decryptedText += alfabeto[m-2]
         
         return {"decryptedText": decryptedText}
