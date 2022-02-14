@@ -41,18 +41,20 @@ class Decrypt:
             #print("d, i", d, i)
             c = int(self.text[i-1])
             #m1 = c ** d % n
-            #print(c, d, n)
+            print(c, d, n)
             m = 1
             pot = c % n
-            #print("pot: {} % {} = {}".format(c, n, pot))
+            
+            print("pot: {} % {} = {}".format(c, n, pot))
             while (int(d) > 0):
-                #print("d (while):", int(d))
+                print("d (while):", int(d))
                 if (int(d) % 2 == 1):
-                    #print("resultado ({} * {}) % {} = {}".format(m, pot, d, (m * pot) % int(n)))
-                    m = (m * pot) % int(n)
-                pot = (pot * pot) % int(n)
+                    print("resultado ({} * {}) % {} = {}".format(int(m), int(pot), int(n), (int(m) * int(pot)) % int(n)))
+                    m = (int(m) * int(pot)) % int(n)
+                pot = (int(pot) * int(pot)) % int(n)
                 d /= 2
-            print("c, m (pre), m (obt)", c, m)      
+
+            print("c, m (pre), m (obt)", c, m)   
             #print("m", m)
             decryptedText += alfabeto[m-2]
         
