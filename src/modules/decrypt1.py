@@ -29,17 +29,31 @@ class Decrypt:
 
 
     def decrypt(self):
+        print("m: 21 22 19 10 15 8")
         primesProduct = (self.p-1)*(self.q-1)
         n = self.p*self.q
-        d = self.euclidesEst(self.e, primesProduct)
-        
-        print("d", d)
+        d1 = abs(self.euclidesEst(self.e, primesProduct))       
        
         decryptedText = ""
 
-        for i in range(1, len(self.text)+1):            
+        for i in range(1, len(self.text)+1):      
+            d = d1
+            #print("d, i", d, i)
             c = int(self.text[i-1])
-            m = c ** d % n
+            #m1 = c ** d % n
+            #print(c, d, n)
+            m = 1
+            pot = c % n
+            #print("pot: {} % {} = {}".format(c, n, pot))
+            while (int(d) > 0):
+                #print("d (while):", int(d))
+                if (int(d) % 2 == 1):
+                    #print("resultado ({} * {}) % {} = {}".format(m, pot, d, (m * pot) % int(n)))
+                    m = (m * pot) % int(n)
+                pot = (pot * pot) % int(n)
+                d /= 2
+            print("c, m (pre), m (obt)", c, m)      
+            #print("m", m)
             decryptedText += alfabeto[m-2]
         
         return {"decryptedText": decryptedText}
